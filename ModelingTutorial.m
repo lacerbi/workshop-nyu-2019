@@ -1,4 +1,6 @@
-%% Tutorial on modeling & model fitting for psychophysics and neuroscience
+%% "Model fitting like a boss"
+% Tutorial on modeling & model fitting in cognitive/computational neuroscience
+
 % by Luigi Acerbi (2019)
 
 %% Add utilities' folder to MATLAB path
@@ -6,7 +8,7 @@
 baseFolder = fileparts(which('ModelingTutorial.m'));
 addpath([baseFolder,filesep(),'utils']);
 
-%% Prepare Acerbi et al.'s (2018) data
+%% Prepare Acerbi*, Dokka* et al.'s (2018) data
 
 % Load full data in temporary struct
 temp = load('1_causalinf_leftright.mat');
@@ -108,45 +110,8 @@ fval
 output
 
 
-%% Model comparison
-
-n = size(data,1);   % Number of trials
-nlls = zeros(1,2);  % Store negative log likelihoods
-
-% Refit simple psychometric function (model 1)
-options = optimset('fminsearch');   % Default options
-options.Display = 'none';
-[xbest1,nlls(1)] = fminsearchbnd(nLLfun,x0,LB,UB,options);
-k(1) = numel(x0);   % # parameters of model 1
-
-% Fit nonstationary psychometric function (model 2)
-LB_ns = [-30 log(0.1) log(0.1) 0];
-UB_ns = [30 log(60) log(60) 1];
-nLLfun_ns = @(params) -sum(log(psyns_like(params, data)));
-
-% Trick: start from optimum of simpler model, fill in new parameters
-% (still, we should *also* do multiple starting points)
-x0_ns = [xbest(1) log(xbest(2)) log(xbest(2)) xbest(3)];
-[xbest2,nlls(2)] = fminsearchbnd(nLLfun_ns,x0_ns,LB_ns,UB_ns,options);
-k(2) = numel(x0_ns);   % # parameters of model 2
-
-% Print model comparison metrics
-
-lls = -nlls                     % Log likelihood
-aic = -2*lls + 2*k              % AIC
-bic = -2*lls + k*log(n)         % BIC
-aic_res = lls - k              % Rescaled AIC
-bic_res = lls - k/2*log(n)     % Rescaled BIC
-
-
 %% Bayesian fit with VBMC (download from: https://github.com/lacerbi/vbmc)
 options = vbmc('defaults');
 options.Display = 'iter';
 options.Plot = true;
-[~,lml(1)] = vbmc(@(x) -nLLfun(x),x0,LB,UB,PLB,PUB,options);
-
-PLB_ns = [-10 log(1) log(1) 0.01];
-PUB_ns = [10 log(10) log(10) 0.1];
-[~,lml(2)] = vbmc(@(x) -nLLfun_ns(x),x0_ns,LB_ns,UB_ns,PLB_ns,PUB_ns,options);
-
-lml
+[vp,lml] = vbmc(@(x) -nLLfun(x),x0,LB,UB,PLB,PUB,options);
