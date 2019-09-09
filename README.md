@@ -1,6 +1,14 @@
 # Introduction to modeling and model fitting in cognitive and computational neuroscience (2019)
 
-This repository contains materials for an introductory workshop to modeling and model fitting in cognitive and computational neuroscience, part of which I presented at the Center for Neural Science, NYU in September 2019. I gave different versions of this tutorial at many other institutions and summer schools (see [here](http://luigiacerbi.com/tutorials/)).
+This repository contains materials for an introductory workshop to modeling and model fitting in cognitive and computational neuroscience, part of which I presented at the Center for Neural Science, NYU in September 2019. 
+
+This tutorial focuses on model fitting via optimization (i.e., maximum-likelihood and maximum-a-posteriori estimation), and on the Bayesian Adaptive Direct Search (BADS) optimization algorithm (https://github.com/lacerbi/bads).
+
+I gave different versions of this tutorial at many other institutions and summer schools (see [here](http://luigiacerbi.com/tutorials/)).
+
+
+## Tutorial
+
 
 The main file for the tutorial is the script [ModelingTutorial.m](https://github.com/lacerbi/model-fitting-workshop/blob/master/ModelingTutorial.m).
 
