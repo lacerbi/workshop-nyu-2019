@@ -10,7 +10,7 @@ I gave different versions of this tutorial at many other institutions and summer
 ## Tutorial
 
 
-The main file for the tutorial is the script [ModelingTutorial.m](https://github.com/lacerbi/model-fitting-workshop/blob/master/ModelingTutorial.m).
+The main file for the tutorial is the script [ModelingTutorial.m](https://github.com/lacerbi/model-fitting-workshop/blob/master/ModelingTutorial.m). Slides are available [here](https://github.com/lacerbi/workshop-nyu-2019/blob/master/presentation/acerbi-nyu-tutorial-sep2019.pdf).
 
 To run some of the model-fitting algorithms in the tutorial you need to download and install the following MATLAB toolboxes:
   - Bayesian Adaptive Direct Search (BADS): https://github.com/lacerbi/bads
